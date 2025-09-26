@@ -2,7 +2,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello IDE");
+        System.out.println("Hello IDE" + " " + args[0]);
         for (int i = 0; i < 10; i++) {
             System.out.println(i);
         }
