@@ -1,0 +1,124 @@
+@startuml
+
+title Snake Game - UML Class Diagram
+
+' ===================== MAIN =====================
+class Main {
+    - Texture snakeTex
+    - Texture foodTex
+    - ShapeRenderer shape
+    - SpriteBatch batch
+    - BitmapFont font
+
+    - GameWorld world
+    - InputController input
+
+    - float timer
+    - float tick
+
+    - int highScore
+
+    - State state
+
+    + create()
+    + render()
+    + dispose()
+
+    - renderMenu()
+    - renderGame()
+    - renderGameOver()
+    - drawGame()
+    - startGame()
+    - updateHighScore()
+    - handleInput()
+}
+
+' ===================== GAME WORLD =====================
+class GameWorld {
+    - Snake snake
+    - Food food
+    - int score
+
+    + update() : boolean
+    + getSnake() : Snake
+    + getFood() : Food
+    + getScore() : int
+}
+
+' ===================== SNAKE =====================
+class Snake {
+    - Array<Vector2> body
+    - Direction direction
+    - boolean grow
+
+    + Snake()
+    + move()
+    + grow()
+    + setDirection(Direction)
+    + getHead() : Vector2
+    + getBody() : Array<Vector2>
+    + checkSelfCollision() : boolean
+}
+
+' ===================== FOOD =====================
+class Food {
+    - Vector2 pos
+
+    + respawn()
+    + getPosition() : Vector2
+}
+
+' ===================== INPUT =====================
+class InputController {
+    - Snake snake
+
+    + InputController(Snake)
+    + update()
+}
+
+' ===================== AUDIO =====================
+class AudioManager {
+    + init()
+    + playEat()
+    + playGameOver()
+    + dispose()
+}
+
+' ===================== SAVE =====================
+class SaveManager {
+    + saveHighScore(int)
+    + loadHighScore() : int
+}
+
+' ===================== ENUM =====================
+enum Direction {
+    UP
+    DOWN
+    LEFT
+    RIGHT
+}
+
+' ===================== EXCEPTION =====================
+class GameOverException {
+    + GameOverException(String)
+}
+
+' ===================== RELAZIONI =====================
+
+Main --> GameWorld
+Main --> InputController
+Main --> SaveManager
+Main --> AudioManager
+Main --> Snake
+Main --> Food
+
+GameWorld --> Snake
+GameWorld --> Food
+
+InputController --> Snake
+
+Snake --> Direction
+Food --> Vector2
+Snake --> Vector2
+
+@enduml
